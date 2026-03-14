@@ -1,38 +1,31 @@
 import React, { useState } from 'react';
 import { View, Text, Button, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import type { FC } from 'react';
 
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-};
-
-const PRODUCTS: Product[] = [
+const PRODUCTS = [
   { id: '1', name: 'Product 1', price: 100 },
   { id: '2', name: 'Product 2', price: 200 },
   { id: '3', name: 'Product 3', price: 300 },
 ];
 
-const TabOneScreen: FC = () => {
-  const [activeTab, setActiveTab] = useState<'profile' | 'products' | 'cart' | 'wishlist'>('products');
-  const [cart, setCart] = useState<Product[]>([]);
-  const [wishlist, setWishlist] = useState<Product[]>([]);
-  const [profile] = useState<{ name: string; email: string }>({ name: 'John Doe', email: 'john@example.com' });
+export default function App() {
+  const [activeTab, setActiveTab] = useState('products');
+  const [cart, setCart] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+  const [profile] = useState({ name: 'John Doe', email: 'john@example.com' });
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product) => {
     setCart([...cart, product]);
   };
 
-  const addToWishlist = (product: Product) => {
+  const addToWishlist = (product) => {
     setWishlist([...wishlist, product]);
   };
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (id) => {
     setCart(cart.filter((item) => item.id !== id));
   };
 
-  const removeFromWishlist = (id: string) => {
+  const removeFromWishlist = (id) => {
     setWishlist(wishlist.filter((item) => item.id !== id));
   };
 
@@ -54,7 +47,7 @@ const TabOneScreen: FC = () => {
       {activeTab === 'products' && (
         <View style={styles.section}>
           <Text style={styles.heading}>Products</Text>
-          <FlatList<Product>
+          <FlatList
             data={PRODUCTS}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
@@ -76,7 +69,7 @@ const TabOneScreen: FC = () => {
       {activeTab === 'cart' && (
         <View style={styles.section}>
           <Text style={styles.heading}>Cart</Text>
-          <FlatList<Product>
+          <FlatList
             data={cart}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
@@ -93,7 +86,7 @@ const TabOneScreen: FC = () => {
       {activeTab === 'wishlist' && (
         <View style={styles.section}>
           <Text style={styles.heading}>Wishlist</Text>
-          <FlatList<Product>
+          <FlatList
             data={wishlist}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
@@ -109,9 +102,7 @@ const TabOneScreen: FC = () => {
       )}
     </View>
   );
-};
-
-export default TabOneScreen;
+}
 
 const styles = StyleSheet.create({
   container: {
